@@ -55,8 +55,13 @@ class TaskController extends Controller
 
     public function update(StoreTaskRequest $request): JsonResponse
     {
-        Task::find($request->id)->update($request->all());
-        return response()->json(['message' => __('Task updated successfully')]);
+        try {
+            Task::find($request->id)->update($request->all());
+            return response()->json(['message' => __('Task updated successfully')]);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['message' => __('Task update failed')], 500);
+        }
     }
 
     public function delete(int $id): JsonResponse

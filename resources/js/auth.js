@@ -4,10 +4,11 @@ $(document).ready(function () {
 
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
+    const container = $('#container');
     if (token) {
         $('#reset-password-modal').removeClass('hidden');
         $('#reset-password-form #res_token').val(token);
-        $('#container').addClass('hidden');
+        container.addClass('hidden');
         urlParams.delete('token');
         window.history.replaceState({}, document.title, window.location.pathname);
     }
@@ -25,12 +26,12 @@ $(document).ready(function () {
             url: '/api/auth/password/reset',
             method: 'POST',
             data: resetData,
-            success: function (response) {
-                $('#message-block').text(response.message).removeClass('hidden').fadeIn().delay(500).fadeOut();
+            success: function () {
+                showMessage('success', 'Пароль успішно змінено');
                 $('#reset-password-modal').addClass('hidden');
             },
-            error: function (error) {
-                $('#message-block').text('Ошибка сброса пароля').removeClass('hidden').fadeIn().delay(500).fadeOut();
+            error: function () {
+                showMessage('error', 'Помилка при зміні паролю');
             }
         });
     });
@@ -45,20 +46,20 @@ $(document).ready(function () {
             url: '/api/auth/login',
             method: 'POST',
             data: loginData,
-            success: function (response) {
+            success: function () {
                location.reload();
             },
-            error: function (error) {
+            error: function () {
                 showMessage('error', 'Невірний логін або пароль');
             }
         });
     });
 
-    $('#forgot-password-btn').on('click', function (event) {
+    $('#forgot-password-btn').on('click', function () {
         $('#forgot-password-modal').removeClass('hidden');
     });
 
-    $('#close-modal').on('click', function (event) {
+    $('#close-modal').on('click', function () {
         $('#forgot-password-modal').addClass('hidden');
     });
 
@@ -76,6 +77,9 @@ $(document).ready(function () {
             data: registerData,
             success: function () {
                 location.reload();
+            },
+            error: function ($xhr) {
+                showMessage('error', $xhr.responseJSON.message);
             }
         });
     });
@@ -99,7 +103,7 @@ $(document).ready(function () {
         });
     });
 
-    const container = $('#container');
+
 
     $('#signUp').on('click', function () {
         container.addClass('right-panel-active');

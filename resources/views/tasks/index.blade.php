@@ -38,6 +38,7 @@
     </div>
 
     @include('tasks.modal.form')
+    @include('tasks.modal.view')
 </div>
 @push('scripts')
     @vite('resources/js/tasks.js')
