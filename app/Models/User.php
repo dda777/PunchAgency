@@ -11,6 +11,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static create(array $array)
  * @method static where($column, $operator = null, $value = null, $boolean = 'and')
  * @property mixed|string $password
+ * @property string $google_auth_data
+ * @property string $telegram_auth_data
  */
 class User extends \Illuminate\Foundation\Auth\User
 {

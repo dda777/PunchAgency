@@ -6,22 +6,18 @@ use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\IndexTaskRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Models\Task;
+use App\Models\User;
 use App\Services\GoogleSheetService;
 use App\Services\TelegramApi;
 use Exception;
-use Google\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Revolution\Google\Client\Facades\Google;
-use Revolution\Google\Sheets\Facades\Sheets;
-use Revolution\Google\Sheets\SheetsClient;
 
 class TaskController extends Controller
 {
-    const FIRST_PAGE = 1;
-
-    public function index(IndexTaskRequest $request): JsonResponse
+    public function index(): JsonResponse
     {
         return response()->json(
             [
@@ -35,13 +31,21 @@ class TaskController extends Controller
         Task::create(array_merge(['user_id' => auth()->id()], $request->all()));
 
         try {
-            GoogleSheetService::appendRowToUserSpreadsheet($request->all());
-            $telegramAuthData = json_decode(Auth::user()->telegram_auth_data, true);
-            (new TelegramApi($telegramAuthData['bot_api_token']))->sendMessage(
-                $telegramAuthData['channel_id'],
-                __('Task created successfully') . "\n" . json_encode($request->all(), JSON_PRETTY_PRINT)
-            );
-        } catch (Exception $e) {
+            /**
+             * @var User $user
+             **/
+            $user = Auth::user();
+
+            GoogleSheetService::appendRowToUserSpreadsheet($request->all(), $user);
+
+            if ($tgAuthData = $user->telegram_auth_data) {
+                $telegramAuthData = json_decode($tgAuthData, true);
+                (new TelegramApi($telegramAuthData['bot_api_token']))->sendMessage(
+                    $telegramAuthData['channel_id'],
+                    __('Task created successfully') . "\n" . json_encode($request->all(), JSON_PRETTY_PRINT)
+                );
+            }
+        } catch (Exception|GuzzleException $e) {
             Log::error($e->getMessage());
         }
 
