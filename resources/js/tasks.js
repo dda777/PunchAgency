@@ -79,7 +79,7 @@ $(document).ready(function () {
                     incompleteTasks.append('<li>Немає невиконаних задач</li>');
                 }
                 if (overdueTasks.children().length === 0) {
-                    overdueTasks.append('<h1>Немає протермінованих задач</h1>');
+                    overdueTasks.append('<li>Немає протермінованих задач</li>');
                 }
                 $('#task-summary').text(`Виконані задачі: ${completedTasks}/${data.data.length}`);
             },
