@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @method static create(array $array)
  * @method static where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static find(int|string|null $id)
  * @property mixed|string $password
  * @property string $google_auth_data
  * @property string $telegram_auth_data
@@ -26,6 +27,8 @@ class User extends \Illuminate\Foundation\Auth\User
         'name',
         'email',
         'password',
+        'google_auth_data',
+        'telegram_auth_data'
     ];
 
     /**
@@ -48,6 +51,8 @@ class User extends \Illuminate\Foundation\Auth\User
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'google_auth_data' => 'array',
+            'telegram_auth_data' => 'array',
         ];
     }
 

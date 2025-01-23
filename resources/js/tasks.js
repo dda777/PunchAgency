@@ -89,6 +89,26 @@ $(document).ready(function () {
         });
     }
 
+    $('#settings-form').on('submit', function (event) {
+        event.preventDefault();
+        const settingsData = {
+            google_auth_data: $('#google_auth_data').val(),
+            telegram_auth_data: $('#telegram_auth_data').val()
+        };
+        $.ajax({
+            url: '/api/user/settings',
+            method: 'PUT',
+            data: settingsData,
+            success: function () {
+                showMessage('success', 'Налаштування збережено');
+                $('#settings-form-modal').addClass('hidden');
+            },
+            errors: function ($xhr) {
+                showMessage('error', $xhr.responseJSON.message);
+            }
+        });
+    });
+
     $('#new-task-form').on('submit', function (event) {
         event.preventDefault();
         const taskId = $(this).data('task-id');
@@ -144,6 +164,21 @@ $(document).ready(function () {
                 $('#new-task-form').data('task-id', taskId);
                 $('#new-task-form button').text('Оновити задачу');
 
+            },
+            errors: function ($xhr) {
+                showMessage('error', $xhr.responseJSON.message);
+            }
+        });
+    });
+
+    $('#settings').on('click', function () {
+        $.ajax({
+            url: `/api/user/settings`,
+            method: 'GET',
+            success: function (settings) {
+                $('#google_auth_data').val(JSON.stringify(settings.data.google_auth_data));
+                $('#telegram_auth_data').val(JSON.stringify(settings.data.telegram_auth_data));
+                $('#settings-form-modal').removeClass('hidden');
             },
             errors: function ($xhr) {
                 showMessage('error', $xhr.responseJSON.message);
@@ -218,7 +253,12 @@ $(document).ready(function () {
     $('#close-task-form-modal').on('click', function () {
         $('#task-form-modal').addClass('hidden');
     });
+
     $('#close-view-modal').on('click', function () {
         $('#task-view-modal').addClass('hidden');
+    });
+
+    $('#close-btn-settings-form-modal, #close-settings-form-modal').on('click', function () {
+        $('#settings-form-modal').addClass('hidden');
     });
 });
