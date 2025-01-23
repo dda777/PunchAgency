@@ -4,5 +4,5 @@
     <input type="email" id="reg_email" name="email" required placeholder="@lang('Email')" />
     <input type="password" id="reg_password" name="password" autocomplete="on" required placeholder="@lang('Password')" />
     <input type="password" id="reg_password_confirmation" name="password_confirmation" autocomplete="on" required placeholder="@lang('Password')" />
-    <button type="submit">@lang('Sign Up')</button>
+    <button class="auth-btn" type="submit">@lang('Sign Up')</button>
 </form>

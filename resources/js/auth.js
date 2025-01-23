@@ -46,8 +46,7 @@ $(document).ready(function () {
             method: 'POST',
             data: loginData,
             success: function (response) {
-
-                location.reload();
+               location.reload();
             }
         });
     });

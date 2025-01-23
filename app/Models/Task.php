@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $fillable = [
+        'user_id',
         'name',
         'description',
         'is_done',
@@ -22,7 +23,7 @@ class Task extends Model
     protected function casts(): array
     {
         return [
-            'done_at' => 'datetime'
+            'done_at' => 'date'
         ];
     }
 }

@@ -3,19 +3,20 @@ import './bootstrap.js'
 $(document).ready(function() {
     function loadTasks() {
         $.ajax({
-            url: '/api/tasks',
+            url: '/api/tasks?page=1&limit=10',
             method: 'GET',
             success: function(data) {
                 $('#tasks').empty();
                 let completedTasks = 0;
-                data.forEach(task => {
+                data.data.forEach(task => {
                     $('#tasks').append(`
                         <li data-id="${task.id}">
-                            <span>${task.title} - ${task.status ? 'Выполнена' : 'Не выполнена'}</span>
+                            <span>${task.name} - ${task.is_done ? 'Выполнена' : 'Не выполнена'}</span>
+                            <button class="edit-task">Редактировать</button>
                             <button class="delete-task">Удалить</button>
                         </li>
                     `);
-                    if (task.status) completedTasks++;
+                    if (task.is_done) completedTasks++;
                 });
                 $('#task-summary').text(`Выполненные задачи: ${completedTasks}/${data.length}`);
             }
@@ -24,24 +25,51 @@ $(document).ready(function() {
 
     $('#new-task-form').on('submit', function(event) {
         event.preventDefault();
+        const taskId = $(this).data('task-id');
         const taskData = {
-            title: $('#title').val(),
+            name: $('#title').val(),
             description: $('#description').val(),
-            due_date: $('#due_date').val(),
-            status: $('#status').val()
+            done_at: $('#done_at').val(),
+            is_done: $('#is_done').val()
         };
+        const method = taskId ? 'PUT' : 'POST';
+        const url = taskId ? `/api/tasks/${taskId}` : '/api/tasks/store';
+        if (taskId) taskData.id = taskId;
         $.ajax({
-            url: '/api/tasks',
-            method: 'POST',
+            url: url,
+            method: method,
             data: taskData,
             success: function() {
                 loadTasks();
-                $('#new-task-form')[0].reset();
+                let taskForm = $('#new-task-form');
+                taskForm[0].reset();
+                $('#task-form-modal').addClass('hidden');
+                taskForm.removeData('task-id');
+            }
+        });
+    });
+    let taskBlock = $('#tasks');
+
+    taskBlock.on('click', '.edit-task', function() {
+        const taskId = $(this).parent().data('id');
+        $.ajax({
+            url: `/api/tasks/${taskId}`,
+            method: 'GET',
+            success: function(task) {
+                let done_at  = new Date(Date.parse(task.done_at));
+
+                $('#title').val(task.name);
+                $('#description').val(task.description);
+                $('#done_at').val(done_at.toISOString().substring(0, 10));
+                $('#is_done').val(task.is_done);
+                $('#task-form-modal').removeClass('hidden');
+                $('#new-task-form').data('task-id', taskId);
+                $('#new-task-form button').text('Оновити задачу');
             }
         });
     });
 
-    $('#tasks').on('click', '.delete-task', function() {
+    taskBlock.on('click', '.delete-task', function() {
         const taskId = $(this).parent().data('id');
         $.ajax({
             url: `/api/tasks/${taskId}`,
@@ -64,7 +92,8 @@ $(document).ready(function() {
 
     loadTasks();
 
-    $('#open-task-form-modal').on('click', function() {
+    $('#create-task-form-modal').on('click', function() {
+        $('#new-task-form button').text('Створити задачу');
         $('#task-form-modal').removeClass('hidden');
     });
 

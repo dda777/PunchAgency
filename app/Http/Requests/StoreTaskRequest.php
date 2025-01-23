@@ -11,14 +11,6 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreTaskRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, ValidationRule|array|string>
@@ -26,7 +18,11 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'id' => ['nullable', 'integer', 'exists:tasks,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'done_at' => ['required', 'date'],
+            'is_done' => ['required', 'boolean'],
         ];
     }
 }

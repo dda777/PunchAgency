@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Request;
 
 class AuthController extends Controller
 {
@@ -50,11 +51,13 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
         try {
             Auth::logout();
+            $request->session()->invalidate();
 
+            $request->session()->regenerateToken();
             return response()->json(['success' => true, 'message' => __('Successfully logged out')]);
         } catch (Exception $exception) {
             Log::log('error', $exception->getMessage());
