@@ -23,16 +23,9 @@ class TaskController extends Controller
 
     public function index(IndexTaskRequest $request): JsonResponse
     {
-
-        if ($request->page == self::FIRST_PAGE) {
-            $offset = 0;
-        } else {
-            $offset = ($request->page - self::FIRST_PAGE) * $request->limit;
-        }
-
         return response()->json(
             [
-                'data' => Task::limit($request->limit)->offset($offset)->get(),
+                'data' => Task::orderBy('done_at' , 'ASC')->get(),
                 'message' => __('Tasks fetched successfully')
             ]);
     }

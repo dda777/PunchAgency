@@ -42,10 +42,10 @@
                 <form id="new-task-form">
                     <input type="text" id="title" name="title" required  placeholder="@lang('Name')">
                     <textarea id="description" name="description" required placeholder="@lang('Name')"></textarea>
-                    <input type="date" id="done_at" name="done_at" placeholder="@lang('Done at')">
+                    <input type="date" id="done_at" name="done_at" required placeholder="@lang('Done at')">
                     <label for="is_done" class="block text-sm font-medium text-gray-700">@lang('Status')</label>
                     <select id="is_done" name="is_done" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                        <option value="0">@lang('Not done')</option>
+                        <option value="0" selected>@lang('Not done')</option>
                         <option value="1">@lang('Done')</option>
                     </select>
                     <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600">@lang('Create')</button>

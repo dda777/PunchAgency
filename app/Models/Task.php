@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static find(int $id)
  * @method static create(array $all)
- * @method static simplePaginate()
- * @method static limit(int $limit)
+ * @method static orderBy(string $string, string $string1)
  */
 class Task extends Model
 {

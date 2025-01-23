@@ -47,6 +47,9 @@ $(document).ready(function () {
             data: loginData,
             success: function (response) {
                location.reload();
+            },
+            error: function (error) {
+                showMessage('error', 'Невірний логін або пароль');
             }
         });
     });

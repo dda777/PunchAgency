@@ -52,6 +52,7 @@ a {
     text-transform: uppercase;
     transition: transform 80ms ease-in;
 }
+
 .ghost {
     border-radius: 20px;
     background-color: transparent;
@@ -64,12 +65,49 @@ a {
     text-transform: uppercase;
     transition: transform 80ms ease-in;
 }
+
 .auth-btn:active {
     transform: scale(0.95);
 }
 
 .auth-btn:focus {
     outline: none;
+}
+
+@media (max-width: 768px) {
+    form {
+        padding: 20px !important;
+    }
+
+    .ghost {
+        padding: 10px 20px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    form {
+        padding: 20px !important;
+    }
+
+    .ghost {
+        font-size: 11px;
+        padding: 10px !important;
+    }
+    .auth-btn {
+        font-size: 11px;
+        padding: 10px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    form {
+        padding: 5px !important;
+    }
+
+    .ghost {
+        font-size: 11px;
+        padding: 10px !important;
+    }
 }
 
 form {
@@ -82,8 +120,9 @@ form {
     height: 100%;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
+
 #reset-password-form form {
     background-color: #FFFFFF;
     display: flex;
@@ -106,14 +145,15 @@ input {
 .container {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25),
-    0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
     position: relative;
     overflow: hidden;
     width: 768px;
     max-width: 100%;
     min-height: 480px;
 }
+
 .solo-container {
     display: flex;
     align-items: center;
@@ -128,6 +168,7 @@ input {
     height: 100%;
     transition: all 0.6s ease-in-out;
 }
+
 .solo-form-container {
     position: absolute;
     transition: all 0.6s ease-in-out;
@@ -180,7 +221,7 @@ input {
     z-index: 100;
 }
 
-.container.right-panel-active .overlay-container{
+.container.right-panel-active .overlay-container {
     transform: translateX(-100%);
 }
 

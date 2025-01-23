@@ -51,13 +51,13 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(): JsonResponse
     {
         try {
             Auth::logout();
-            $request->session()->invalidate();
+            request()->session()->invalidate();
 
-            $request->session()->regenerateToken();
+            request()->session()->regenerateToken();
             return response()->json(['success' => true, 'message' => __('Successfully logged out')]);
         } catch (Exception $exception) {
             Log::log('error', $exception->getMessage());
