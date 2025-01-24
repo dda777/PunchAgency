@@ -21,7 +21,7 @@ class TaskController extends Controller
     {
         return response()->json(
             [
-                'data' => Task::orderBy('done_at' , 'ASC')->get(),
+                'data' => Task::all(['id', 'title', 'is_done', 'done_at']),
                 'message' => __('Tasks fetched successfully')
             ]);
     }
