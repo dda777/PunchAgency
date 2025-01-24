@@ -26,18 +26,18 @@
 
 
     <div id="task-list" class="mb-6 flex justify-center items-center flex-col">
-        <h2 class="text-2xl font-semibold mb-4 text-left pt-6 text-green-700 ">Виконані таски</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-left pt-6 text-green-700 ">Виконані задачі</h2>
         <ul id="done_tasks" class="list-disc p-5" style="width: 90%"></ul>
     </div>
 
 
     <div id="task-list" class="mb-6 flex justify-center items-center flex-col">
-        <h2 class="text-2xl font-semibold mb-4 text-left pt-6 text-yellow-600 ">Не виконані таски</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-left pt-6 text-yellow-600 ">Не виконані задачі</h2>
         <ul id="incomplete_tasks" class="list-disc p-5" style="width: 90%"></ul>
     </div>
 
     <div id="task-list" class="mb-6 flex justify-center items-center flex-col">
-        <h2 class="text-2xl font-semibold mb-4 text-left pt-6 text-red-700 ">Протерміновані таски</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-left pt-6 text-red-700 ">Протерміновані задачі</h2>
         <ul id="overdue_task" class="list-disc p-5" style="width: 90%"></ul>
     </div>
 
