@@ -71,5 +71,41 @@
 - Запустить миграции - `php artisan migrate`
 - Скомпилировать фронтенд - `npm i && npm run build`
 - Запустить проект - `php artisan serve`
+- Зарегистрироваться, и на главном экране нажать на шестеренку и ввести конфигурационные фалы для api телеграма и гугл таблиц.
+ 
+# Пример конфигурационных файлов
 
+## telegram_auth_data
+- bot_api_token - это токен бота, который можно получить у @BotFather в телеграме
+- channel_id - это id канала, в который бот будет отправлять сообщения, его можно получить в WEB версии телеграма (URL)
+```json
+{
+    "bot_api_token": "API_TOKEN",
+    "channel_id": "CHANNEL_ID"
+}	
+```
+## google_auth_data
 
+- auth_config - это данные из файла credentials.json, который можно получить в Google Cloud Platform https://console.cloud.google.com/apis/credentials
+- sheet_id - это id таблицы, в которую будут добавляться задачи
+- sheet_name - это имя листа в таблице, в который будут добавляться задачи
+- auth_config.client_email нужно добавить в раздел "Редактор" в таблице, чтобы бот мог добавлять задачи
+```json
+{
+    "sheet_id": "SHEET_ID",
+    "sheet_name": "SHEET_NAME",
+    "auth_config": {
+        "type": "service_account",
+        "project_id": "PROJECT_ID",
+        "private_key_id": "PRIVATE_KEY_ID",
+        "private_key": "PRIVATE_KEY",
+        "client_email": "CLIENT_EMAIL",
+        "client_id": "CLIENT_ID",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/punchagency%40denis-209009.iam.gserviceaccount.com",
+        "universe_domain": "googleapis.com"
+    }
+}
+```
